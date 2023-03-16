@@ -1,7 +1,7 @@
 import pytest
 
 from card import Card, card_from_tuple
-from board import Board
+from board import Board, SEPARATOR
 from node import Node
 from test_strings import *
 import addiction
@@ -53,6 +53,14 @@ def test_successor():
     assert c2.suit == 0
     assert c2.value == 5
     assert c2.successor() is None
+
+
+def test_predeccessor():
+    c1 = Card('C2')
+    c2 = c1.predeccessor()
+    assert c2.suit == 0
+    assert c2.value == 0
+    assert c2.predeccessor() is None
 
 
 def test_board():
@@ -281,6 +289,28 @@ def test_find_optimum():
     for move in moves:
         b = b.move_card(*move)
     assert b.solved()
+
+
+def test_solution():
+    # Test case where the solution found by the algorithm has more moves than one found by hand.
+    # @TODO: Tweak the algorithm to make sure we find the best solution
+    b = Board(TESTSTR11)
+    n = Node(b)
+    n.get_subtree()
+    moves = n.find_optimum()
+    moves2 = []
+    sequence = TESTSTR12.split(SEPARATOR)
+    for card_str in sequence:
+        c = Card(card_str)
+        d = c.predeccessor()
+        src, src2 = b.find_card(c), b.find_card(d)
+        target = src2[0], src2[1] + 1
+        moves2.append((src, target))
+        b = b.move_card(src, target)
+    assert b.solved()
+    # assert moves == moves2
+    assert len(moves) == 28
+    assert len(moves2) == 24
 
 
 def test_path_from_root():

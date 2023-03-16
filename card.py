@@ -34,13 +34,19 @@ class Card:
 
     def __eq__(self, other):
         return isinstance(other, Card) and self.suit == other.suit and self.value == other.value
-        # return other is not None and self.suit == other.suit and self.value == other.value
 
     def successor(self):
         if self.value == MAX_CARD:
             return None
         c = deepcopy(self)
         c.value += 1
+        return c
+
+    def predeccessor(self):
+        if self.value == 0:
+            return None
+        c = deepcopy(self)
+        c.value -= 1
         return c
 
 
