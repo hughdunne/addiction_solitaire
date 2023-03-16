@@ -11,8 +11,11 @@ def main():
     n.get_subtree()
     moves = n.find_optimum()
     for src, target in moves:
-        print(str(b.grid[src[0]][src[1]]) + ' to Row ' + str(target[0] + 1) + ', Col ' + str(target[1] + 1))
+        print("Move {0} from Row {1}, Col {2} to Row {3}, Col {4}".format(
+            b.grid[src[0]][src[1]], src[0] + 1, src[1] + 1, target[0] + 1, target[1] + 1))
         b = b.move_card(src, target)
+    if b.solved():
+        print("Solved in {0} moves".format(len(moves)))
 
 
 if __name__ == '__main__':
