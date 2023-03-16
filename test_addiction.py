@@ -298,12 +298,15 @@ def test_addiction(capsys):
         'CA,D4,D6,H4,C5,C3,S4',
         'HA,H2,H6,D2,S2,,D3'
     ]
+    expected_prompts = ["Row 1: ", "Row 2: ", "Row 3: ", "Row 4: "]
+    prompts = []
 
     def mock_input(s):
-        print(s, end='')
+        prompts.append(s)
         return input_values.pop(0)
     addiction.input = mock_input
     addiction.main()
     out, err = capsys.readouterr()
+    assert prompts == expected_prompts
     assert out.endswith("Solved in 29 moves\n")
     assert err == ''
