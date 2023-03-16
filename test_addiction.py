@@ -145,6 +145,9 @@ def test_move_card():
     b3 = b2.move_card((3, 6), (3, 5))
     assert str(b3) == TESTSTR3
 
+
+def test_move_card_invalid():
+    b = Board(TESTSTR1)
     with pytest.raises(ValueError) as e:
         b.move_card((1, 4), (1, 4))  # noqa
     assert str(e.value) == "Must move card to a different slot"
@@ -154,6 +157,8 @@ def test_move_card():
     with pytest.raises(ValueError) as e:
         b.move_card((1, 3), (0, 5))  # noqa
     assert str(e.value) == "Card must be one higher than its left neighbor"
+
+    b3 = Board(TESTSTR3)
     with pytest.raises(ValueError) as e:
         b3.move_card((1, 6), (0, 6))  # noqa
     assert str(e.value) == "Trying to move from an empty slot"

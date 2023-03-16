@@ -63,9 +63,8 @@ class Board:
     def find_card(self, card):
         for i, row in enumerate(self.grid):
             for j, cell in enumerate(row):
-                if cell is not None:
-                    if cell == card:
-                        return i, j
+                if cell == card:
+                    return i, j
         else:
             # Should never get here
             raise ValueError("Could not find card")

@@ -15,7 +15,7 @@ character is the value, e.g. "DA" for the ace of diamonds or "S6" for the six of
 spades. Cards are delimited by commas. Use an extra comma to represent a blank
 space.
 
-Example:
+### Example:
 
 ![Screenshot](addiction.PNG)
 

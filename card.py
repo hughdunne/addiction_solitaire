@@ -33,7 +33,8 @@ class Card:
         return SUITS[self.suit] + face_value
 
     def __eq__(self, other):
-        return self.suit == other.suit and self.value == other.value
+        return isinstance(other, Card) and self.suit == other.suit and self.value == other.value
+        # return other is not None and self.suit == other.suit and self.value == other.value
 
     def successor(self):
         if self.value == MAX_CARD:
