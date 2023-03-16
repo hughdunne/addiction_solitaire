@@ -26,35 +26,36 @@ Example:
 
 The program will then output the solution, move by move:
 
-    S4 to Row 2, Col 4
-    C4 to Row 3, Col 7
-    S5 to Row 2, Col 5
-    D2 to Row 2, Col 2
-    S6 to Row 2, Col 6
-    H6 to Row 1, Col 7
-    S3 to Row 4, Col 6
-    D3 to Row 2, Col 3
-    S4 to Row 4, Col 7
-    H3 to Row 4, Col 3
-    H4 to Row 4, Col 4
-    D6 to Row 1, Col 3
-    D5 to Row 3, Col 3
-    D6 to Row 3, Col 4
-    S2 to Row 1, Col 2
-    S3 to Row 1, Col 3
-    H5 to Row 4, Col 5
-    C3 to Row 1, Col 6
-    H6 to Row 4, Col 6
-    D4 to Row 2, Col 4
-    C6 to Row 3, Col 6
-    S4 to Row 1, Col 4
-    C2 to Row 3, Col 2
-    S5 to Row 1, Col 5
-    D5 to Row 2, Col 5
-    C3 to Row 3, Col 3
-    S6 to Row 1, Col 6
-    D6 to Row 2, Col 6
-    C4 to Row 3, Col 4
+    Move S4 from Row 3, Col 7 to Row 2, Col 4
+    Move C4 from Row 1, Col 7 to Row 3, Col 7
+    Move S5 from Row 2, Col 2 to Row 2, Col 5
+    Move D2 from Row 4, Col 4 to Row 2, Col 2
+    Move S6 from Row 1, Col 3 to Row 2, Col 6
+    Move H6 from Row 4, Col 3 to Row 1, Col 7
+    Move S3 from Row 2, Col 3 to Row 4, Col 6
+    Move D3 from Row 4, Col 7 to Row 2, Col 3
+    Move S4 from Row 2, Col 4 to Row 4, Col 7
+    Move H3 from Row 1, Col 4 to Row 4, Col 3
+    Move H4 from Row 3, Col 4 to Row 4, Col 4
+    Move D6 from Row 3, Col 3 to Row 1, Col 3
+    Move D5 from Row 1, Col 2 to Row 3, Col 3
+    Move D6 from Row 1, Col 3 to Row 3, Col 4
+    Move S2 from Row 4, Col 5 to Row 1, Col 2
+    Move S3 from Row 4, Col 6 to Row 1, Col 3
+    Move H5 from Row 1, Col 6 to Row 4, Col 5
+    Move C3 from Row 3, Col 6 to Row 1, Col 6
+    Move H6 from Row 1, Col 7 to Row 4, Col 6
+    Move D4 from Row 3, Col 2 to Row 2, Col 4
+    Move C6 from Row 2, Col 7 to Row 3, Col 6
+    Move S4 from Row 4, Col 7 to Row 1, Col 4
+    Move C2 from Row 1, Col 5 to Row 3, Col 2
+    Move S5 from Row 2, Col 5 to Row 1, Col 5
+    Move D5 from Row 3, Col 3 to Row 2, Col 5
+    Move C3 from Row 1, Col 6 to Row 3, Col 3
+    Move S6 from Row 2, Col 6 to Row 1, Col 6
+    Move D6 from Row 3, Col 4 to Row 2, Col 6
+    Move C4 from Row 3, Col 7 to Row 3, Col 4
+    Solved in 29 moves
 
 ## Testing
 
