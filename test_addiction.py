@@ -4,6 +4,7 @@ from card import Card, card_from_tuple
 from board import Board
 from node import Node
 from test_strings import *
+import addiction
 
 
 def test_card_from_tuple():
@@ -171,6 +172,12 @@ def test_find_card():
     assert b.find_card(Card('C5')) == (3, 2)
     assert b.find_card(Card('S6')) == (3, 6)
 
+    b1 = Board(TESTSTR1)
+    b1.grid[3][6] = None
+    with pytest.raises(ValueError) as e:
+        b1.find_card(Card('S6'))  # noqa
+    assert str(e.value) == "Could not find card"
+
 
 def test_solved():
     b = Board(TESTSTR1)
@@ -277,3 +284,21 @@ def test_path_from_root():
     n.get_subtree()
     assert n.path_from_root() == []
     assert n.children[0].path_from_root() == [((3, 6), (3, 5))]
+
+
+def test_addiction(capsys):
+    input_values = [
+        'SA,D5,S6,H3,C2,H5,C4',
+        'DA,S5,S3,,,,C6',
+        'CA,D4,D6,H4,C5,C3,S4',
+        'HA,H2,H6,D2,S2,,D3'
+    ]
+
+    def mock_input(s):
+        print(s, end='')
+        return input_values.pop(0)
+    addiction.input = mock_input
+    addiction.main()
+    out, err = capsys.readouterr()
+    assert out.endswith("Solved in 29 moves\n")
+    assert err == ''
