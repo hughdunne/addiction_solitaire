@@ -87,7 +87,7 @@ class Board:
         return self.score() == ROWS * (MAX_CARD + 1)
 
     def valid_moves(self):
-        retval = set()
+        retval = []
         for i, row in enumerate(self.grid):
             prev_card = None
             for j, card in enumerate(row):
@@ -107,11 +107,11 @@ class Board:
                         neighbor = self.grid[i][1]
                         if neighbor is not None and neighbor.value == 1:
                             pass
-                        retval.update(aces)
+                        retval.extend(aces)
                     elif prev_card is not None:
                         src_card = prev_card.successor()
                         if src_card is not None:
                             src = self.find_card(src_card)
-                            retval.add((src, target))
+                            retval.append((src, target))
                 prev_card = card
         return retval

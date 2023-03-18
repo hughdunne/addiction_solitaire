@@ -214,43 +214,27 @@ def test_score():
 
 def test_valid_moves():
     b = Board(TESTSTR3)
-    assert b.valid_moves() == set()
+    assert b.valid_moves() == []
 
     b1 = Board(TESTSTR4)
-    expected1 = set()
-    expected1.add(((3, 6), (3, 5)))
-    assert b1.valid_moves() == expected1
+    assert b1.valid_moves() == [((3, 6), (3, 5))]
 
     b2 = Board(TESTSTR5)
-    expected2 = set()
-    expected2.add(((1, 3), (0, 2)))
-    expected2.add(((1, 2), (1, 0)))
-    expected2.add(((0, 3), (1, 0)))
-    expected2.add(((0, 5), (1, 0)))
-    expected2.add(((2, 2), (2, 6)))
-    expected2.add(((1, 4), (3, 6)))
-    assert b2.valid_moves() == expected2
+    assert b2.valid_moves() == [((1, 3), (0, 2)), ((1, 2), (1, 0)), ((0, 3), (1, 0)),
+                                ((0, 5), (1, 0)), ((2, 2), (2, 6)), ((1, 4), (3, 6))]
 
     b3 = Board(TESTSTR6)
-    expected3 = set()
-    expected3.add(((2, 6), (1, 1)))
-    expected3.add(((2, 1), (3, 5)))
-    assert b3.valid_moves() == expected3
+    assert b3.valid_moves() == [((2, 6), (1, 1)), ((2, 1), (3, 5))]
 
     b4 = Board(TESTSTR7)
-    expected4 = set()
-    expected4.add(((0, 1), (0, 3)))
-    expected4.add(((1, 1), (2, 1)))
-    assert b4.valid_moves() == expected4
-
+    assert b4.valid_moves() == [((0, 1), (0, 3)), ((1, 1), (2, 1))]
 
     b5 = Board(TESTSTR12)
-    expected5 = set()
-    expected5.add(((3, 6), (3, 5)))
-    expected5.add(((0, 6), (0, 0)))
-    expected5.add(((3, 0), (0, 0)))
-    expected5.add(((1, 0), (0, 0)))
-    assert b5.valid_moves() == expected5
+    assert b5.valid_moves() == [((0, 6), (0, 0)), ((1, 0), (0, 0)), ((3, 0), (0, 0)), ((3, 6), (3, 5))]
+
+    b5 = Board(TESTSTR13)
+    assert b5.valid_moves() == [((0, 0), (1, 0)), ((3, 0), (1, 0)), ((2, 0), (1, 0)),
+                                ((0, 1), (1, 0)), ((2, 2), (2, 1)), ((3, 2), (3, 1))]
 
 
 def test_node():
@@ -299,7 +283,7 @@ def test_find_optimum():
     b = Board(TESTSTR8)
     n = Node(b)
     n.get_subtree()
-    assert n.find_optimum() == [((1, 6), (1, 5)), ((3, 6), (3, 5)), ((2, 6), (2, 5)), ((0, 6), (0, 5))]
+    assert n.find_optimum() == [((0, 6), (0, 5)), ((1, 6), (1, 5)), ((2, 6), (2, 5)), ((3, 6), (3, 5))]
 
     b = Board(TESTSTR3131)
     n = Node(b)
@@ -345,5 +329,5 @@ def test_addiction(capsys):
     addiction.main()
     out, err = capsys.readouterr()
     assert prompts == expected_prompts
-    assert out.endswith("Solved in 29 moves\n")
+    assert out.endswith("Solved in 26 moves\n")
     assert err == ''
