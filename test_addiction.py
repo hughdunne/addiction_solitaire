@@ -254,14 +254,15 @@ def test_node():
 
     b = Board(TESTSTR1)
     n = Node(b)
-    n.get_subtree()
-    assert len(Node.boards_seen) == 2001
+    solution = n.solution()
+    assert len(Node.boards_seen) == 2000
     assert Node.best_score == 24
+    assert len(solution) == 30
 
 
 # @pytest.mark.slow
 # @pytest.mark.skip(reason="slow")
-def test_hard_node():
+def test_hard_mode():
     # This board has an obvious solution but a large move tree.
     b = Board(TEST_HARD_MODE)
     n = Node(b)
@@ -270,28 +271,11 @@ def test_hard_node():
 
 
 def test_find_optimum():
-    b = Board(TESTSTR3)
+    b = Board(TEST_BLOCKED)
     n = Node(b)
-    n.get_subtree()
-    assert n.find_optimum() == []
-
-    b = Board(TESTSTR4)
-    n = Node(b)
-    n.get_subtree()
-    assert n.find_optimum() == [((3, 6), (3, 5))]
-
-    b = Board(TESTSTR8)
-    n = Node(b)
-    n.get_subtree()
-    assert n.find_optimum() == [((0, 6), (0, 5)), ((1, 6), (1, 5)), ((2, 6), (2, 5)), ((3, 6), (3, 5))]
-
-    b = Board(TESTSTR3131)
-    n = Node(b)
-    n.get_subtree()
-    moves = n.find_optimum()
-    for move in moves:
-        b = b.move_card(*move)
-    assert b.solved()
+    assert n.solution() is None
+    assert n.find_optimum() == [((1, 3), (0, 2)), ((1, 4), (0, 3)), ((3, 2), (2, 3)),
+                                ((0, 4), (3, 2)), ((1, 5), (0, 4))]
 
 
 def test_solution():
@@ -307,9 +291,10 @@ def test_solution():
 def test_path_from_root():
     b = Board(TESTSTR4)
     n = Node(b)
-    n.get_subtree()
+    solution = n.solution()
     assert n.path_from_root() == []
-    assert n.children[0].path_from_root() == [((3, 6), (3, 5))]
+    assert n.children[0].path_from_root() == solution
+    assert solution == [((3, 6), (3, 5))]
 
 
 def test_addiction(capsys):
@@ -330,4 +315,25 @@ def test_addiction(capsys):
     out, err = capsys.readouterr()
     assert prompts == expected_prompts
     assert out.endswith("Solved in 26 moves\n")
+    assert err == ''
+
+
+def test_addiction_1(capsys):
+    input_values = [
+        'SA,S2,,,H3,H4,',
+        'DA,D5,D6,S3,S4,S5,S6',
+        'CA,C2,C3,,D4,D2,D3',
+        'HA,H2,C4,C5,C6,H5,H6'
+    ]
+    expected_prompts = ["Row 1: ", "Row 2: ", "Row 3: ", "Row 4: "]
+    prompts = []
+
+    def mock_input(s):
+        prompts.append(s)
+        return input_values.pop(0)
+    addiction.input = mock_input
+    addiction.main()
+    out, err = capsys.readouterr()
+    assert prompts == expected_prompts
+    assert out.endswith("Move S5 from Row 2, Col 6 to Row 1, Col 5\n")
     assert err == ''

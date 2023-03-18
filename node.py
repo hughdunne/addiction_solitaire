@@ -16,7 +16,6 @@ class Node:
         self.children = []
 
     def solution(self):
-        # This operation needs to be idempotent
         q = [self]
         while len(q) > 0:
             curr_node = q.pop(0)
@@ -33,17 +32,6 @@ class Node:
             else:
                 q += curr_node.children
         return None
-
-    def get_subtree(self):
-        # This operation needs to be idempotent
-        board_str = str(self.board)
-        if board_str not in Node.boards_seen:
-            Node.boards_seen.add(board_str)
-            for move in self.board.valid_moves():
-                child_board = self.board.move_card(*move)
-                child_node = Node(child_board, move, self)
-                self.children.append(child_node)
-                child_node.get_subtree()
 
     def find_optimum(self):
         # Do a breadth-first search

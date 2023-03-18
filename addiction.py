@@ -8,8 +8,9 @@ def main():
         rows.append(input("Row " + str(row + 1) + ": "))
     b = Board(SEPARATOR.join(rows))
     n = Node(b)
-    n.get_subtree()
-    moves = n.find_optimum()
+    moves = n.solution()
+    if moves is None:
+        moves = n.find_optimum()
     for src, target in moves:
         print("Move {0} from Row {1}, Col {2} to Row {3}, Col {4}".format(
             b.grid[src[0]][src[1]], src[0] + 1, src[1] + 1, target[0] + 1, target[1] + 1))
