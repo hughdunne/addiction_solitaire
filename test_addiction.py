@@ -244,6 +244,15 @@ def test_valid_moves():
     assert b4.valid_moves() == expected4
 
 
+    b5 = Board(TESTSTR12)
+    expected5 = set()
+    expected5.add(((3, 6), (3, 5)))
+    expected5.add(((0, 6), (0, 0)))
+    expected5.add(((3, 0), (0, 0)))
+    expected5.add(((1, 0), (0, 0)))
+    assert b5.valid_moves() == expected5
+
+
 def test_node():
     b = Board(TESTSTR3)
     n = Node(b)
@@ -267,12 +276,12 @@ def test_node():
 
 
 # @pytest.mark.slow
-@pytest.mark.skip(reason="slow")
+# @pytest.mark.skip(reason="slow")
 def test_hard_node():
     # This board has an obvious solution but a large move tree.
     b = Board(TEST_HARD_MODE)
     n = Node(b)
-    n.get_subtree()
+    assert len(n.solution()) == 24
     assert Node.best_score == 24
 
 
