@@ -1,7 +1,7 @@
 import pytest
 
 from card import Card, card_from_tuple
-from board import Board, SEPARATOR
+from board import Board
 from node import Node
 from test_strings import *
 import addiction
@@ -173,7 +173,7 @@ def test_move_card_invalid():
     with pytest.raises(ValueError) as e:
         b4 = Board(TESTSTR5)
         b4.move_card((3, 0), (1, 0))  # noqa
-    assert str(e.value) == "Cannot move an ace out of the first slot"
+    assert str(e.value) == "Ace cannot move after being locked in"
     with pytest.raises(ValueError) as e:
         b5 = Board(TESTSTR10)
         b5.move_card((2, 5), (0, 0))  # noqa
@@ -247,12 +247,12 @@ def test_valid_moves():
 def test_node():
     b = Board(TESTSTR3)
     n = Node(b)
-    n.get_subtree()
+    assert n.solution() == []
     assert len(n.children) == 0
 
     b = Board(TESTSTR4)
     n = Node(b)
-    n.get_subtree()
+    assert n.solution() == [((3, 6), (3, 5))]
     assert len(n.children) == 1
     bd = n.children[0].board
     assert n.children[0].parent == n
@@ -263,6 +263,16 @@ def test_node():
     n = Node(b)
     n.get_subtree()
     assert len(Node.boards_seen) == 2001
+    assert Node.best_score == 24
+
+
+# @pytest.mark.slow
+@pytest.mark.skip(reason="slow")
+def test_hard_node():
+    # This board has an obvious solution but a large move tree.
+    b = Board(TEST_HARD_MODE)
+    n = Node(b)
+    n.get_subtree()
     assert Node.best_score == 24
 
 
@@ -292,25 +302,13 @@ def test_find_optimum():
 
 
 def test_solution():
-    # Test case where the solution found by the algorithm has more moves than one found by hand.
-    # @TODO: Tweak the algorithm to make sure we find the best solution
     b = Board(TESTSTR11)
     n = Node(b)
-    n.get_subtree()
-    moves = n.find_optimum()
-    moves2 = []
-    sequence = TESTSTR12.split(SEPARATOR)
-    for card_str in sequence:
-        c = Card(card_str)
-        d = c.predeccessor()
-        src, src2 = b.find_card(c), b.find_card(d)
-        target = src2[0], src2[1] + 1
-        moves2.append((src, target))
-        b = b.move_card(src, target)
+    moves = n.solution()
+    for move in moves:
+        b = b.move_card(*move)
     assert b.solved()
-    # assert moves == moves2
-    assert len(moves) == 28
-    assert len(moves2) == 24
+    assert len(moves) == 24
 
 
 def test_path_from_root():

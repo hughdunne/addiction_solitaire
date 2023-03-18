@@ -49,8 +49,8 @@ class Board:
             raise ValueError("Only an ace can go in the first slot")
         elif self.grid[target_row][target_slot] is not None:
             raise ValueError("Card can only be moved to an empty slot")
-        elif src_slot == 0 and src_card.value == 0:
-            raise ValueError("Cannot move an ace out of the first slot")
+        elif src_slot == 0 and src_card.value == 0 and src_card.successor() == self.grid[src_row][src_slot + 1]:
+            raise ValueError("Ace cannot move after being locked in")
         elif target_slot != 0:
             left_neighbor = self.grid[target_row][target_slot - 1]
             if left_neighbor.successor() != src_card:
