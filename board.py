@@ -43,6 +43,7 @@ class Board:
         src_row, src_slot = src
         target_row, target_slot = target
         src_card = self.grid[src_row][src_slot]
+        # noinspection PyUnresolvedReferences
         if src_card is None:
             raise ValueError("Trying to move from an empty slot")
         elif target_slot == 0 and src_card.value != 0:
@@ -53,6 +54,7 @@ class Board:
             raise ValueError("Ace cannot move after being locked in")
         elif target_slot != 0:
             left_neighbor = self.grid[target_row][target_slot - 1]
+            # noinspection PyUnresolvedReferences
             if left_neighbor.successor() != src_card:
                 raise ValueError("Card must be one higher than its left neighbor")
         board = deepcopy(self)

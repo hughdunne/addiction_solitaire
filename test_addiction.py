@@ -122,22 +122,17 @@ def test_board():
     assert b.grid[3][6].value == 5
 
 
-def test_board_invalid():
+@pytest.mark.parametrize("initstr, errmsg", [
+    (TESTSTR_INVALID, "Missing cards - check the initialization string"),
+    (TESTSTR_INVALID1, "Check the initialization string"),
+    (TESTSTR_INVALID2, "Check the initialization string"),
+    (TESTSTR_INVALID3, "Invalid card D8, check the initialization string"),
+    (TESTSTR_INVALID4, "Invalid card A3, check the initialization string")
+])
+def test_board_invalid(initstr, errmsg):
     with pytest.raises(ValueError) as e:
-        Board(TESTSTR_INVALID)  # noqa
-    assert str(e.value) == "Missing cards - check the initialization string"
-    with pytest.raises(ValueError) as e:
-        Board(TESTSTR_INVALID1)  # noqa
-    assert str(e.value) == "Check the initialization string"
-    with pytest.raises(ValueError) as e:
-        Board(TESTSTR_INVALID2)  # noqa
-    assert str(e.value) == "Check the initialization string"
-    with pytest.raises(ValueError) as e:
-        Board(TESTSTR_INVALID3)  # noqa
-    assert str(e.value) == "Invalid card D8, check the initialization string"
-    with pytest.raises(ValueError) as e:
-        Board(TESTSTR_INVALID4)  # noqa
-    assert str(e.value) == "Invalid card A3, check the initialization string"
+        Board(initstr)  # noqa
+    assert str(e.value) == errmsg
 
 
 def test_board_str():
@@ -154,30 +149,19 @@ def test_move_card():
     assert str(b3) == TESTSTR3
 
 
-def test_move_card_invalid():
-    b = Board(TESTSTR1)
+@pytest.mark.parametrize("initstr, move, errmsg", [
+    (TESTSTR1, ((1, 4), (1, 4)), "Must move card to a different slot"),
+    (TESTSTR1, ((1, 4), (0, 1)), "Card can only be moved to an empty slot"),
+    (TESTSTR1, ((1, 3), (0, 5)), "Card must be one higher than its left neighbor"),
+    (TESTSTR3, ((1, 6), (0, 6)), "Trying to move from an empty slot"),
+    (TESTSTR5, ((3, 0), (1, 0)), "Ace cannot move after being locked in"),
+    (TESTSTR10, ((2, 5), (0, 0)), "Only an ace can go in the first slot")
+])
+def test_move_card_invalid(initstr, move, errmsg):
+    b = Board(initstr)
     with pytest.raises(ValueError) as e:
-        b.move_card((1, 4), (1, 4))  # noqa
-    assert str(e.value) == "Must move card to a different slot"
-    with pytest.raises(ValueError) as e:
-        b.move_card((1, 4), (0, 1))  # noqa
-    assert str(e.value) == "Card can only be moved to an empty slot"
-    with pytest.raises(ValueError) as e:
-        b.move_card((1, 3), (0, 5))  # noqa
-    assert str(e.value) == "Card must be one higher than its left neighbor"
-
-    b3 = Board(TESTSTR3)
-    with pytest.raises(ValueError) as e:
-        b3.move_card((1, 6), (0, 6))  # noqa
-    assert str(e.value) == "Trying to move from an empty slot"
-    with pytest.raises(ValueError) as e:
-        b4 = Board(TESTSTR5)
-        b4.move_card((3, 0), (1, 0))  # noqa
-    assert str(e.value) == "Ace cannot move after being locked in"
-    with pytest.raises(ValueError) as e:
-        b5 = Board(TESTSTR10)
-        b5.move_card((2, 5), (0, 0))  # noqa
-    assert str(e.value) == "Only an ace can go in the first slot"
+        b.move_card(*move)  # noqa
+    assert str(e.value) == errmsg
 
 
 def test_find_card():
@@ -199,42 +183,31 @@ def test_solved():
     assert b.solved()
 
 
-def test_score():
-    b = Board(TESTSTR3)
-    assert b.score() == 24
-    b1 = Board(TESTSTR1)
-    assert b1.score() == 4
-    b2 = Board(TESTSTR1)
-    assert b2.score() == 4
-    b3 = Board(TESTSTR4)
-    assert b3.score() == 23
-    b4 = Board(TESTSTR10)
-    assert b4.score() == 0
+@pytest.mark.parametrize("initstr, score", [
+    (TESTSTR1, 4),
+    (TESTSTR3, 24),
+    (TESTSTR4, 23),
+    (TESTSTR10, 0)
+])
+def test_score(initstr, score):
+    b = Board(initstr)
+    assert b.score() == score
 
 
-def test_valid_moves():
-    b = Board(TESTSTR3)
-    assert b.valid_moves() == []
-
-    b1 = Board(TESTSTR4)
-    assert b1.valid_moves() == [((3, 6), (3, 5))]
-
-    b2 = Board(TESTSTR5)
-    assert b2.valid_moves() == [((1, 3), (0, 2)), ((1, 2), (1, 0)), ((0, 3), (1, 0)),
-                                ((0, 5), (1, 0)), ((2, 2), (2, 6)), ((1, 4), (3, 6))]
-
-    b3 = Board(TESTSTR6)
-    assert b3.valid_moves() == [((2, 6), (1, 1)), ((2, 1), (3, 5))]
-
-    b4 = Board(TESTSTR7)
-    assert b4.valid_moves() == [((0, 1), (0, 3)), ((1, 1), (2, 1))]
-
-    b5 = Board(TESTSTR12)
-    assert b5.valid_moves() == [((0, 6), (0, 0)), ((1, 0), (0, 0)), ((3, 0), (0, 0)), ((3, 6), (3, 5))]
-
-    b5 = Board(TESTSTR13)
-    assert b5.valid_moves() == [((0, 1), (1, 0)), ((3, 0), (1, 0)), ((2, 0), (1, 0)),
-                                ((0, 0), (1, 0)), ((2, 2), (2, 1)), ((3, 2), (3, 1))]
+@pytest.mark.parametrize("initstr, validmoves", [
+    (TESTSTR3, []),
+    (TESTSTR4, [((3, 6), (3, 5))]),
+    (TESTSTR5, [((1, 3), (0, 2)), ((1, 2), (1, 0)), ((0, 3), (1, 0)),
+                ((0, 5), (1, 0)), ((2, 2), (2, 6)), ((1, 4), (3, 6))]),
+    (TESTSTR6, [((2, 6), (1, 1)), ((2, 1), (3, 5))]),
+    (TESTSTR7, [((0, 1), (0, 3)), ((1, 1), (2, 1))]),
+    (TESTSTR12, [((0, 6), (0, 0)), ((1, 0), (0, 0)), ((3, 0), (0, 0)), ((3, 6), (3, 5))]),
+    (TESTSTR13, [((0, 1), (1, 0)), ((3, 0), (1, 0)), ((2, 0), (1, 0)),
+                 ((0, 0), (1, 0)), ((2, 2), (2, 1)), ((3, 2), (3, 1))])
+])
+def test_valid_moves(initstr, validmoves):
+    b = Board(initstr)  # noqa
+    assert b.valid_moves() == validmoves
 
 
 def test_node():
@@ -260,8 +233,7 @@ def test_node():
     assert len(solution) == 30
 
 
-# @pytest.mark.slow
-# @pytest.mark.skip(reason="slow")
+@pytest.mark.slow
 def test_hard_mode():
     # This board has an obvious solution but a large move tree.
     b = Board(TEST_HARD_MODE)
@@ -297,43 +269,40 @@ def test_path_from_root():
     assert solution == [((3, 6), (3, 5))]
 
 
-def test_addiction(capsys):
-    input_values = [
-        'SA,D5,S6,H3,C2,H5,C4',
-        'DA,S5,S3,,,,C6',
-        'CA,D4,D6,H4,C5,C3,S4',
-        'HA,H2,H6,D2,S2,,D3'
-    ]
-    expected_prompts = ["Row 1: ", "Row 2: ", "Row 3: ", "Row 4: "]
-    prompts = []
+class TestMain:
 
-    def mock_input(s):
-        prompts.append(s)
-        return input_values.pop(0)
-    addiction.input = mock_input
-    addiction.main()
-    out, err = capsys.readouterr()
-    assert prompts == expected_prompts
-    assert out.endswith("Solved in 26 moves\n")
-    assert err == ''
+    @pytest.fixture()
+    def expected_prompts(self):
+        return ["Row 1: ", "Row 2: ", "Row 3: ", "Row 4: "]
 
+    @pytest.fixture()
+    def input_mocker(self):
+        def wrapper(prompts, input_values):
+            def mock_input(s):
+                prompts.append(s)
+                return input_values.pop(0)
+            return mock_input
+        return wrapper
 
-def test_addiction_1(capsys):
-    input_values = [
-        'SA,S2,,,H3,H4,',
-        'DA,D5,D6,S3,S4,S5,S6',
-        'CA,C2,C3,,D4,D2,D3',
-        'HA,H2,C4,C5,C6,H5,H6'
-    ]
-    expected_prompts = ["Row 1: ", "Row 2: ", "Row 3: ", "Row 4: "]
-    prompts = []
-
-    def mock_input(s):
-        prompts.append(s)
-        return input_values.pop(0)
-    addiction.input = mock_input
-    addiction.main()
-    out, err = capsys.readouterr()
-    assert prompts == expected_prompts
-    assert out.endswith("Move S5 from Row 2, Col 6 to Row 1, Col 5\n")
-    assert err == ''
+    @pytest.mark.parametrize("inputs, expout", [
+        ([
+             'SA,D5,S6,H3,C2,H5,C4',
+             'DA,S5,S3,,,,C6',
+             'CA,D4,D6,H4,C5,C3,S4',
+             'HA,H2,H6,D2,S2,,D3'
+         ], "Solved in 26 moves\n"),
+        ([
+             'SA,S2,,,H3,H4,',
+             'DA,D5,D6,S3,S4,S5,S6',
+             'CA,C2,C3,,D4,D2,D3',
+             'HA,H2,C4,C5,C6,H5,H6'
+         ], "Move S5 from Row 2, Col 6 to Row 1, Col 5\n")
+    ])
+    def test_addiction(self, capsys, expected_prompts, input_mocker, inputs, expout):
+        prompts = []
+        addiction.input = input_mocker(prompts, inputs)
+        addiction.main()
+        out, err = capsys.readouterr()
+        assert prompts == expected_prompts
+        assert out.endswith(expout)
+        assert err == ''

@@ -84,6 +84,9 @@ ipython_config.py
 # PyCharm
 .idea
 
+#Mac
+.DS_Store
+
 # pyenv
 .python-version
 
