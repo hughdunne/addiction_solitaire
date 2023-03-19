@@ -16,8 +16,10 @@ class Card:
         self.suit = SUITS.index(str_suit)
         if str_value == 'A':
             self.value = 0
-        else:
+        elif str_value.isdigit():
             self.value = int(str_value) - 1
+        else:
+            raise ValueError("Invalid face value")
         if self.value not in range(MAX_CARD + 1):
             raise ValueError("Invalid face value")
 

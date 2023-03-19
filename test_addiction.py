@@ -22,17 +22,17 @@ def test_card():
     assert c2.suit == 0
     assert c2.value == 0
 
-    with pytest.raises(ValueError) as e:
-        Card('E')  # noqa
-    assert str(e.value) == "Invalid card"
 
+@pytest.mark.parametrize("cardstr, errmsg", [
+    ('E', "Invalid card"),
+    ('E4', "Invalid suit"),
+    ('C8', "Invalid face value"),
+    ('CD',  "Invalid face value")
+])
+def test_card_invalid(cardstr, errmsg):
     with pytest.raises(ValueError) as e:
-        Card('E4')  # noqa
-    assert str(e.value) == "Invalid suit"
-
-    with pytest.raises(ValueError) as e:
-        Card('C8')  # noqa
-    assert str(e.value) == "Invalid face value"
+        Card(cardstr)  # noqa
+    assert str(e.value) == errmsg
 
 
 def test_to_tuple():
