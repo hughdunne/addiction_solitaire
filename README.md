@@ -26,36 +26,33 @@ space.
 
 The program will then output the solution, move by move:
 
-    Move S4 from Row 3, Col 7 to Row 2, Col 4
-    Move C4 from Row 1, Col 7 to Row 3, Col 7
-    Move S5 from Row 2, Col 2 to Row 2, Col 5
-    Move D2 from Row 4, Col 4 to Row 2, Col 2
-    Move S6 from Row 1, Col 3 to Row 2, Col 6
-    Move H6 from Row 4, Col 3 to Row 1, Col 7
-    Move S3 from Row 2, Col 3 to Row 4, Col 6
-    Move D3 from Row 4, Col 7 to Row 2, Col 3
-    Move S4 from Row 2, Col 4 to Row 4, Col 7
-    Move H3 from Row 1, Col 4 to Row 4, Col 3
-    Move H4 from Row 3, Col 4 to Row 4, Col 4
-    Move D6 from Row 3, Col 3 to Row 1, Col 3
-    Move D5 from Row 1, Col 2 to Row 3, Col 3
-    Move D6 from Row 1, Col 3 to Row 3, Col 4
-    Move S2 from Row 4, Col 5 to Row 1, Col 2
-    Move S3 from Row 4, Col 6 to Row 1, Col 3
-    Move H5 from Row 1, Col 6 to Row 4, Col 5
-    Move C3 from Row 3, Col 6 to Row 1, Col 6
-    Move H6 from Row 1, Col 7 to Row 4, Col 6
-    Move D4 from Row 3, Col 2 to Row 2, Col 4
-    Move C6 from Row 2, Col 7 to Row 3, Col 6
-    Move S4 from Row 4, Col 7 to Row 1, Col 4
-    Move C2 from Row 1, Col 5 to Row 3, Col 2
-    Move S5 from Row 2, Col 5 to Row 1, Col 5
-    Move D5 from Row 3, Col 3 to Row 2, Col 5
-    Move C3 from Row 1, Col 6 to Row 3, Col 3
-    Move S6 from Row 2, Col 6 to Row 1, Col 6
-    Move D6 from Row 3, Col 4 to Row 2, Col 6
-    Move C4 from Row 3, Col 7 to Row 3, Col 4
-    Solved in 29 moves
+      1: Move S4 from Row 3, Col 7 to Row 2, Col 4
+      2: Move S5 from Row 2, Col 2 to Row 2, Col 5
+      3: Move D2 from Row 4, Col 4 to Row 2, Col 2
+      4: Move S6 from Row 1, Col 3 to Row 2, Col 6
+      5: Move D6 from Row 3, Col 3 to Row 1, Col 3
+      6: Move D5 from Row 1, Col 2 to Row 3, Col 3
+      7: Move S2 from Row 4, Col 5 to Row 1, Col 2
+      8: Move C4 from Row 1, Col 7 to Row 3, Col 7
+      9: Move H6 from Row 4, Col 3 to Row 1, Col 7
+     10: Move H3 from Row 1, Col 4 to Row 4, Col 3
+     11: Move H4 from Row 3, Col 4 to Row 4, Col 4
+     12: Move D6 from Row 1, Col 3 to Row 3, Col 4
+     13: Move S3 from Row 2, Col 3 to Row 1, Col 3
+     14: Move S4 from Row 2, Col 4 to Row 1, Col 4
+     15: Move D3 from Row 4, Col 7 to Row 2, Col 3
+     16: Move D4 from Row 3, Col 2 to Row 2, Col 4
+     17: Move C2 from Row 1, Col 5 to Row 3, Col 2
+     18: Move S5 from Row 2, Col 5 to Row 1, Col 5
+     19: Move D5 from Row 3, Col 3 to Row 2, Col 5
+     20: Move C3 from Row 3, Col 6 to Row 3, Col 3
+     21: Move C6 from Row 2, Col 7 to Row 3, Col 6
+     22: Move H5 from Row 1, Col 6 to Row 4, Col 5
+     23: Move S6 from Row 2, Col 6 to Row 1, Col 6
+     24: Move D6 from Row 3, Col 4 to Row 2, Col 6
+     25: Move C4 from Row 3, Col 7 to Row 3, Col 4
+     26: Move H6 from Row 1, Col 7 to Row 4, Col 6
+    Solved in 26 moves
 
 ## Testing
 
