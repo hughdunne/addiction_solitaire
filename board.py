@@ -1,4 +1,3 @@
-from copy import deepcopy
 from card import Card, MAX_CARD, SUITS
 
 SEPARATOR: str = ','
@@ -57,7 +56,8 @@ class Board:
             # noinspection PyUnresolvedReferences
             if left_neighbor.successor() != src_card:
                 raise ValueError("Card must be one higher than its left neighbor")
-        board = deepcopy(self)
+        board = self.__new__(type(self))
+        board.grid = [list(row) for row in self.grid]
         board.grid[src_row][src_slot], board.grid[target_row][target_slot] = \
             board.grid[target_row][target_slot], board.grid[src_row][src_slot]
         return board
