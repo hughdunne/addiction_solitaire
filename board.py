@@ -11,15 +11,19 @@ class Board:
         if len(cells) != ROWS * ROW_LENGTH:
             raise ValueError("Check the initialization string")
         self.grid = [[] for _ in range(ROWS)]
+        self.lookup = {'blanks': set()}
         cards_found = set()
         for i, cell in enumerate(cells):
             row: int = i // ROW_LENGTH
+            col: int = i % ROW_LENGTH
             if cell == '':
                 c = None
+                self.lookup['blanks'].add((row, col))
             else:
                 try:
                     c = Card(cell)
                     cards_found.add(cell)
+                    self.lookup[cell] = (row, col)
                 except ValueError:
                     raise ValueError("Invalid card {0}, check the initialization string".format(cell))
             self.grid[row].append(c)
@@ -56,20 +60,21 @@ class Board:
             # noinspection PyUnresolvedReferences
             if left_neighbor.successor() != src_card:
                 raise ValueError("Card must be one higher than its left neighbor")
+
+        # Clone the board.
         board = self.__new__(type(self))
         board.grid = [list(row) for row in self.grid]
         board.grid[src_row][src_slot], board.grid[target_row][target_slot] = \
             board.grid[target_row][target_slot], board.grid[src_row][src_slot]
+        board.lookup = dict(self.lookup)
+        board.lookup['blanks'] = set(self.lookup['blanks'])
+        board.lookup[str(src_card)] = target
+        board.lookup['blanks'].add(src)
+        board.lookup['blanks'].remove(target)
         return board
 
     def find_card(self, card):
-        for i, row in enumerate(self.grid):
-            for j, cell in enumerate(row):
-                if cell == card:
-                    return i, j
-        else:
-            # Should never get here
-            raise ValueError("Could not find card")
+        return self.lookup[str(card)]
 
     def score(self):
         # Returns the number of cards locked in

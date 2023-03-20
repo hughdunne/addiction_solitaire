@@ -148,12 +148,6 @@ def test_find_card():
     assert b.find_card(Card('C5')) == (3, 2)
     assert b.find_card(Card('S6')) == (3, 6)
 
-    b1 = Board(TESTSTR1)
-    b1.grid[3][6] = None
-    with pytest.raises(ValueError) as e:
-        b1.find_card(Card('S6'))  # noqa
-    assert str(e.value) == "Could not find card"
-
 
 def test_solved():
     b = Board(TESTSTR1)
