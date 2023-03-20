@@ -1,16 +1,10 @@
 import pytest
 
-from card import Card, card_from_tuple
+from card import Card
 from board import Board
 from node import Node
 from test_strings import *
 import addiction
-
-
-def test_card_from_tuple():
-    assert card_from_tuple((0, 0)) == Card('CA')
-    assert card_from_tuple((3, 5)) == Card('S6')
-    assert card_from_tuple((3, 0)) == Card('S1')
 
 
 def test_card():
@@ -35,13 +29,6 @@ def test_card_invalid(cardstr, errmsg):
     assert str(e.value) == errmsg
 
 
-def test_to_tuple():
-    c1 = Card('C1')
-    assert c1.to_tuple() == (0, 0)
-    c2 = Card('S6')
-    assert c2.to_tuple() == (3, 5)
-
-
 def test_card_str():
     assert str(Card('C5')) == 'C5'
     assert str(Card('D1')) == 'DA'
@@ -53,14 +40,6 @@ def test_successor():
     assert c2.suit == 0
     assert c2.value == 5
     assert c2.successor() is None
-
-
-def test_predeccessor():
-    c1 = Card('C2')
-    c2 = c1.predeccessor()
-    assert c2.suit == 0
-    assert c2.value == 0
-    assert c2.predeccessor() is None
 
 
 def test_board():

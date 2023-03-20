@@ -23,9 +23,6 @@ class Card:
         if self.value not in range(MAX_CARD + 1):
             raise ValueError("Invalid face value")
 
-    def to_tuple(self) -> tuple:
-        return self.suit, self.value
-
     def __str__(self):
         face_value: str
         if self.value == 0:
@@ -43,15 +40,3 @@ class Card:
         c = deepcopy(self)
         c.value += 1
         return c
-
-    def predeccessor(self):
-        if self.value == 0:
-            return None
-        c = deepcopy(self)
-        c.value -= 1
-        return c
-
-
-def card_from_tuple(tup: tuple) -> Card:
-    suit, face_value = tup
-    return Card(SUITS[suit] + str(face_value + 1))
