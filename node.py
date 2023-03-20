@@ -7,9 +7,10 @@ class Node:
             # This is root node so we reset
             Node.boards_seen = set()
             Node.best_score = 0
+            self.path_from_root = []
+        else:
+            self.path_from_root = parent.path_from_root + [prev_move]
         self.board = board
-        self.prev_move = prev_move
-        self.parent = parent
         self.score = board.score()
         if self.score > Node.best_score:
             Node.best_score = self.score
@@ -28,7 +29,7 @@ class Node:
                     curr_node.children.append(child_node)
             if len(curr_node.children) == 0:
                 if curr_node.board.solved():
-                    return curr_node.path_from_root()
+                    return curr_node.path_from_root
             else:
                 q += curr_node.children
         return None
@@ -39,14 +40,5 @@ class Node:
         while len(q) > 0:
             curr_node = q.pop(0)
             if curr_node.score == Node.best_score:
-                return curr_node.path_from_root()
+                return curr_node.path_from_root
             q += curr_node.children
-
-    def path_from_root(self):
-        curr_node = self
-        path = []
-        while curr_node.parent is not None:
-            path.append(curr_node.prev_move)
-            curr_node = curr_node.parent
-        path.reverse()
-        return path

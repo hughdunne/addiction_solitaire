@@ -200,7 +200,6 @@ def test_node():
     assert n.solution() == [((3, 6), (3, 5))]
     assert len(n.children) == 1
     bd = n.children[0].board
-    assert n.children[0].parent == n
     assert bd.solved()
     assert str(bd) == TESTSTR3
 
@@ -243,8 +242,8 @@ def test_path_from_root():
     b = Board(TESTSTR4)
     n = Node(b)
     solution = n.solution()
-    assert n.path_from_root() == []
-    assert n.children[0].path_from_root() == solution
+    assert n.path_from_root == []
+    assert n.children[0].path_from_root == solution
     assert solution == [((3, 6), (3, 5))]
 
 
