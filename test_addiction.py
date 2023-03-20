@@ -23,9 +23,9 @@ def test_card():
     ('C8', "Invalid face value"),
     ('CD',  "Invalid face value")
 ])
-def test_card_invalid(cardstr, errmsg):
+def test_card_invalid(cardstr: str, errmsg):
     with pytest.raises(ValueError) as e:
-        Card(cardstr)  # noqa
+        Card(cardstr)
     assert str(e.value) == errmsg
 
 
@@ -108,9 +108,9 @@ def test_board():
     (TESTSTR_INVALID3, "Invalid card D8, check the initialization string"),
     (TESTSTR_INVALID4, "Invalid card A3, check the initialization string")
 ])
-def test_board_invalid(initstr, errmsg):
+def test_board_invalid(initstr: str, errmsg):
     with pytest.raises(ValueError) as e:
-        Board(initstr)  # noqa
+        Board(initstr)
     assert str(e.value) == errmsg
 
 
@@ -136,10 +136,10 @@ def test_move_card():
     (TESTSTR5, ((3, 0), (1, 0)), "Ace cannot move after being locked in"),
     (TESTSTR10, ((2, 5), (0, 0)), "Only an ace can go in the first slot")
 ])
-def test_move_card_invalid(initstr, move, errmsg):
+def test_move_card_invalid(initstr: str, move, errmsg):
     b = Board(initstr)
     with pytest.raises(ValueError) as e:
-        b.move_card(*move)  # noqa
+        b.move_card(*move)
     assert str(e.value) == errmsg
 
 
@@ -178,8 +178,8 @@ def test_score(initstr, score):
     (TESTSTR13, [((0, 1), (1, 0)), ((3, 0), (1, 0)), ((2, 0), (1, 0)),
                  ((0, 0), (1, 0)), ((2, 2), (2, 1)), ((3, 2), (3, 1))])
 ])
-def test_valid_moves(initstr, validmoves):
-    b = Board(initstr)  # noqa
+def test_valid_moves(initstr: str, validmoves):
+    b = Board(initstr)
     assert b.valid_moves() == validmoves
 
 
