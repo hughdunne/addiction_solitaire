@@ -52,11 +52,11 @@ class Board:
         # noinspection PyUnresolvedReferences
         if src_card is None:
             raise ValueError("Trying to move from an empty slot")
-        elif target_slot == 0 and src_card.value != 0:
+        elif target_slot == 0 and src_card.value != 1:
             raise ValueError("Only an ace can go in the first slot")
         elif self.grid[target_row][target_slot] is not None:
             raise ValueError("Card can only be moved to an empty slot")
-        elif src_slot == 0 and src_card.value == 0 and src_card.successor() == self.grid[src_row][src_slot + 1]:
+        elif src_slot == 0 and src_card.value == 1 and src_card.successor() == self.grid[src_row][src_slot + 1]:
             raise ValueError("Ace cannot move after being locked in")
         elif target_slot != 0:
             left_neighbor = self.grid[target_row][target_slot - 1]
@@ -67,9 +67,11 @@ class Board:
         # Clone the board.
         board = self.__new__(self.__class__)
         board.grid = [list(row) for row in self.grid]
+        board.lookup = dict(self.lookup)
+
+        # Move the card in the cloned board.
         board.grid[src_row][src_slot], board.grid[target_row][target_slot] = \
             board.grid[target_row][target_slot], board.grid[src_row][src_slot]
-        board.lookup = dict(self.lookup)
         board.lookup[str(src_card)] = target
         return board
 
@@ -85,13 +87,13 @@ class Board:
                 break
             suit = card.suit
             for idx, card1 in enumerate(row):
-                if card1 is None or card1.suit != suit or card1.value != idx:
+                if card1 is None or card1.suit != suit or card1.value != idx + 1:
                     break
                 retval += 1
         return retval
 
     def solved(self):
-        return self.score() == ROWS * (MAX_CARD + 1)
+        return self.score() == ROWS * MAX_CARD
 
     def valid_moves(self):
         retval = []
@@ -112,7 +114,7 @@ class Board:
                         # If the card to the right of the target slot is a 2, give preference to
                         # moving the ace of the same suit here.
                         neighbor = self.grid[i][1]
-                        if neighbor is not None and neighbor.value == 1:
+                        if neighbor is not None and neighbor.value == 2:
                             aces[0], aces[neighbor.suit] = aces[neighbor.suit], aces[0]
                         retval.extend(aces)
                     elif prev_card is not None:

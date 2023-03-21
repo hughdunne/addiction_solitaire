@@ -1,11 +1,11 @@
-MAX_CARD = 5  # Face value 6
+MAX_CARD = 6  # Face value 6
 SUITS = 'CDHS'
 
 
 class Card:
     def __init__(self, value: str):
         # Suits: 0, 1, 2, 3 => club, diamond, heart, spade
-        # Value: 0 - 5 => Ace - 6
+        # Value: 1 - 6 => Ace - 6
         if len(value) != 2:
             raise ValueError("Invalid card")
         str_suit, str_value = value
@@ -13,20 +13,20 @@ class Card:
             raise ValueError("Invalid suit")
         self.suit = SUITS.index(str_suit)
         if str_value == 'A':
-            self.value = 0
+            self.value = 1
         elif str_value.isdigit():
-            self.value = int(str_value) - 1
+            self.value = int(str_value)
         else:
             raise ValueError("Invalid face value")
-        if self.value not in range(MAX_CARD + 1):
+        if self.value not in range(1, MAX_CARD + 1):
             raise ValueError("Invalid face value")
 
     def __str__(self):
         face_value: str
-        if self.value == 0:
+        if self.value == 1:
             face_value = 'A'
         else:
-            face_value = str(1 + self.value)
+            face_value = str(self.value)
         return SUITS[self.suit] + face_value
 
     def __eq__(self, other):

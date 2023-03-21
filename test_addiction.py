@@ -10,11 +10,11 @@ import addiction
 def test_card():
     c1 = Card('CA')
     assert c1.suit == 0
-    assert c1.value == 0
+    assert c1.value == 1
 
     c2 = Card('C1')
     assert c2.suit == 0
-    assert c2.value == 0
+    assert c2.value == 1
 
 
 @pytest.mark.parametrize("cardstr, errmsg", [
@@ -38,67 +38,67 @@ def test_successor():
     c1 = Card('C5')
     c2 = c1.successor()
     assert c2.suit == 0
-    assert c2.value == 5
+    assert c2.value == 6
     assert c2.successor() is None
 
 
 def test_board():
     b = Board(TESTSTR1)
     assert b.grid[0][0].suit == 0
-    assert b.grid[0][0].value == 0
+    assert b.grid[0][0].value == 1
     assert b.grid[0][1].suit == 3
-    assert b.grid[0][1].value == 4
+    assert b.grid[0][1].value == 5
     assert b.grid[0][2].suit == 2
-    assert b.grid[0][2].value == 4
+    assert b.grid[0][2].value == 5
     assert b.grid[0][3].suit == 1
-    assert b.grid[0][3].value == 1
+    assert b.grid[0][3].value == 2
     assert b.grid[0][4].suit == 1
-    assert b.grid[0][4].value == 2
+    assert b.grid[0][4].value == 3
     assert b.grid[0][5] is None
     assert b.grid[0][6].suit == 1
-    assert b.grid[0][6].value == 5
+    assert b.grid[0][6].value == 6
 
     assert b.grid[1][0].suit == 3
-    assert b.grid[1][0].value == 0
+    assert b.grid[1][0].value == 1
     assert b.grid[1][1].suit == 0
-    assert b.grid[1][1].value == 3
+    assert b.grid[1][1].value == 4
     assert b.grid[1][2].suit == 0
-    assert b.grid[1][2].value == 2
+    assert b.grid[1][2].value == 3
     assert b.grid[1][3].suit == 1
-    assert b.grid[1][3].value == 4
+    assert b.grid[1][3].value == 5
     assert b.grid[1][4].suit == 1
-    assert b.grid[1][4].value == 3
+    assert b.grid[1][4].value == 4
     assert b.grid[1][5] is None
     assert b.grid[1][6].suit == 2
-    assert b.grid[1][6].value == 3
+    assert b.grid[1][6].value == 4
 
     assert b.grid[2][0].suit == 2
-    assert b.grid[2][0].value == 0
+    assert b.grid[2][0].value == 1
     assert b.grid[2][1] is None
     assert b.grid[2][2].suit == 3
-    assert b.grid[2][2].value == 3
+    assert b.grid[2][2].value == 4
     assert b.grid[2][3].suit == 3
-    assert b.grid[2][3].value == 1
+    assert b.grid[2][3].value == 2
     assert b.grid[2][4].suit == 2
-    assert b.grid[2][4].value == 2
+    assert b.grid[2][4].value == 3
     assert b.grid[2][5].suit == 0
-    assert b.grid[2][5].value == 5
+    assert b.grid[2][5].value == 6
     assert b.grid[2][6] is None
 
     assert b.grid[3][0].suit == 1
-    assert b.grid[3][0].value == 0
+    assert b.grid[3][0].value == 1
     assert b.grid[3][1].suit == 0
-    assert b.grid[3][1].value == 1
+    assert b.grid[3][1].value == 2
     assert b.grid[3][2].suit == 0
-    assert b.grid[3][2].value == 4
+    assert b.grid[3][2].value == 5
     assert b.grid[3][3].suit == 2
-    assert b.grid[3][3].value == 1
+    assert b.grid[3][3].value == 2
     assert b.grid[3][4].suit == 2
-    assert b.grid[3][4].value == 5
+    assert b.grid[3][4].value == 6
     assert b.grid[3][5].suit == 3
-    assert b.grid[3][5].value == 2
+    assert b.grid[3][5].value == 3
     assert b.grid[3][6].suit == 3
-    assert b.grid[3][6].value == 5
+    assert b.grid[3][6].value == 6
 
 
 @pytest.mark.parametrize("initstr, errmsg", [
