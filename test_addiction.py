@@ -102,9 +102,9 @@ def test_board():
 
 
 @pytest.mark.parametrize("initstr, errmsg", [
-    (TESTSTR_INVALID, "Missing cards - check the initialization string"),
-    (TESTSTR_INVALID1, "Check the initialization string"),
-    (TESTSTR_INVALID2, "Check the initialization string"),
+    (TESTSTR_INVALID, "Duplicate card D5 in Row 4, Col 6 and Row 4, Col 5. Check the initialization string"),
+    (TESTSTR_INVALID1, "Wrong number of cards. Check the initialization string"),
+    (TESTSTR_INVALID2, "Wrong number of cards. Check the initialization string"),
     (TESTSTR_INVALID3, "Invalid card D8, check the initialization string"),
     (TESTSTR_INVALID4, "Invalid card A3, check the initialization string")
 ])

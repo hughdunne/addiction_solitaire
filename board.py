@@ -9,25 +9,25 @@ class Board:
     def __init__(self, initstr: str):
         cells = initstr.strip().upper().split(SEPARATOR)
         if len(cells) != ROWS * ROW_LENGTH:
-            raise ValueError("Check the initialization string")
+            raise ValueError("Wrong number of cards. Check the initialization string")
         self.grid = [[] for _ in range(ROWS)]
         self.lookup = dict()
-        cards_found = set()
         for i, cell in enumerate(cells):
             row: int = i // ROW_LENGTH
             col: int = i % ROW_LENGTH
             if cell == '':
                 c = None
             else:
+                if cell in self.lookup:
+                    msg = "Duplicate card {0} in Row {1}, Col {2} and Row {3}, Col {4}. Check the initialization string"
+                    raise ValueError(msg.format(cell, row + 1, col + 1,
+                                                self.lookup[cell][0] + 1, self.lookup[cell][1] + 1))
                 try:
                     c = Card(cell)
-                    cards_found.add(cell)
                     self.lookup[cell] = (row, col)
                 except ValueError:
                     raise ValueError("Invalid card {0}, check the initialization string".format(cell))
             self.grid[row].append(c)
-        if len(cards_found) != ROWS * (MAX_CARD + 1):
-            raise ValueError("Missing cards - check the initialization string")
 
     def __str__(self):
         cells = []
