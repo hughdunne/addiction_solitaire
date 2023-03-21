@@ -61,7 +61,7 @@ class Board:
                 raise ValueError("Card must be one higher than its left neighbor")
 
         # Clone the board.
-        board = self.__new__(type(self))
+        board = self.__new__(self.__class__)
         board.grid = [list(row) for row in self.grid]
         board.grid[src_row][src_slot], board.grid[target_row][target_slot] = \
             board.grid[target_row][target_slot], board.grid[src_row][src_slot]

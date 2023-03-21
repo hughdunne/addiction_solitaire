@@ -35,7 +35,7 @@ class Card:
     def successor(self):
         if self.value == MAX_CARD:
             return None
-        c = self.__new__(type(self))
+        c = self.__new__(self.__class__)
         c.suit = self.suit
         c.value = self.value + 1
         return c
