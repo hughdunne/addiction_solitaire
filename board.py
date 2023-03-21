@@ -5,6 +5,10 @@ ROWS: int = 4
 ROW_LENGTH: int = 7
 
 
+def format_slot(slot):
+    return "Row {0}, Col {1}".format(slot[0] + 1, slot[1] + 1)
+
+
 class Board:
     def __init__(self, initstr: str):
         cells = initstr.strip().upper().split(SEPARATOR)
@@ -19,9 +23,9 @@ class Board:
                 c = None
             else:
                 if cell in self.lookup:
-                    msg = "Duplicate card {0} in Row {1}, Col {2} and Row {3}, Col {4}. Check the initialization string"
-                    raise ValueError(msg.format(cell, row + 1, col + 1,
-                                                self.lookup[cell][0] + 1, self.lookup[cell][1] + 1))
+                    msg = "Duplicate card {0} in {1} and {2}. Check the initialization string"
+                    msg = msg.format(cell, format_slot((row, col)), format_slot(self.lookup[cell]))
+                    raise ValueError(msg)
                 try:
                     c = Card(cell)
                     self.lookup[cell] = (row, col)
