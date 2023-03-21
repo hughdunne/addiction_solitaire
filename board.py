@@ -11,14 +11,13 @@ class Board:
         if len(cells) != ROWS * ROW_LENGTH:
             raise ValueError("Check the initialization string")
         self.grid = [[] for _ in range(ROWS)]
-        self.lookup = {'blanks': set()}
+        self.lookup = dict()
         cards_found = set()
         for i, cell in enumerate(cells):
             row: int = i // ROW_LENGTH
             col: int = i % ROW_LENGTH
             if cell == '':
                 c = None
-                self.lookup['blanks'].add((row, col))
             else:
                 try:
                     c = Card(cell)
@@ -67,10 +66,7 @@ class Board:
         board.grid[src_row][src_slot], board.grid[target_row][target_slot] = \
             board.grid[target_row][target_slot], board.grid[src_row][src_slot]
         board.lookup = dict(self.lookup)
-        board.lookup['blanks'] = set(self.lookup['blanks'])
         board.lookup[str(src_card)] = target
-        board.lookup['blanks'].add(src)
-        board.lookup['blanks'].remove(target)
         return board
 
     def find_card(self, card):
