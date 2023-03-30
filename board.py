@@ -105,18 +105,11 @@ class Board:
                     if j == 0:
                         # Can only arise in hard mode.
                         # Any ace can be moved to this cell if it is not already locked in.
-                        aces = []
                         for suit in SUITS:
                             src = self.find_card(Card(suit + 'A'))
                             deuce = self.find_card(Card(suit + '2'))
                             if src[1] != 0 or not(deuce[0] == src[0] and deuce[1] == 1):
-                                aces.append((src, target))
-                        # If the card to the right of the target slot is a 2, give preference to
-                        # moving the ace of the same suit here.
-                        neighbor = self.grid[i][1]
-                        if neighbor is not None and neighbor.value == 2:
-                            aces[0], aces[neighbor.suit] = aces[neighbor.suit], aces[0]
-                        retval.extend(aces)
+                                retval.append((src, target))
                     elif prev_card is not None:
                         src_card = prev_card.successor()
                         if src_card is not None:
