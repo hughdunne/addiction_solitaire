@@ -1,4 +1,4 @@
-from board import Board, ROWS, SEPARATOR
+from board import Board, format_slot, ROWS, SEPARATOR
 from node import Node
 
 
@@ -13,8 +13,8 @@ def main():
         moves = n.find_optimum()
     move_nr = 1
     for src, target in moves:
-        print("{0:3}: Move {1} from Row {2}, Col {3} to Row {4}, Col {5}".format(
-            move_nr, b.grid[src[0]][src[1]], src[0] + 1, src[1] + 1, target[0] + 1, target[1] + 1))
+        print("{0:3}: Move {1} from {2} to {3}".format(
+            move_nr, b.grid[src[0]][src[1]], format_slot(src), format_slot(target)))
         b = b.move_card(src, target)
         move_nr += 1
     if b.solved():
