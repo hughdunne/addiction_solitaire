@@ -23,8 +23,8 @@ class Board:
                 c = None
             else:
                 if cell in self.lookup:
-                    msg = "Duplicate card {0} in {1} and {2}. Check the initialization string"
-                    msg = msg.format(cell, format_slot((row, col)), format_slot(self.lookup[cell]))
+                    msg = "Duplicate card {0} in {1} and {2}. Check the initialization string".format(
+                        cell, format_slot((row, col)), format_slot(self.lookup[cell]))
                     raise ValueError(msg)
                 try:
                     c = Card(cell)
